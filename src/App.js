@@ -1,4 +1,4 @@
-import React , {useState} from 'react'  
+import React , {useState , useEffect} from 'react'  
 import Nav from './Pages/Nav';
 import About from './Pages/About';
 import Projects from './Pages/Projects';
@@ -7,6 +7,10 @@ import Footer from './Pages/Footer';
 
 export default function App() {
   const [menuState , SetMenu] = useState(false);
+
+  useEffect(() => {
+    document.title = 'Sadaif Rizvi'
+  })
 
   function toggleMenu(){
     SetMenu(!menuState ? 'active' : menuState === 'deactive' ? 'active' : 'deactive')

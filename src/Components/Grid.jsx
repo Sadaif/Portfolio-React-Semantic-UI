@@ -5,7 +5,7 @@ import {Grid , Image} from 'semantic-ui-react';
 
 export function DevImageComponent(props){
   return( 
-    <Grid centered columns={2}>
+    <Grid centered columns={3}>
       <Grid.Column>
         <Image src={props.src} />
       </Grid.Column>

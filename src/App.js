@@ -1,28 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React , {useState} from 'react'  
+import Nav from './Pages/Nav';
+import About from './Pages/About';
+import Projects from './Pages/Projects';
+import Contact from './Pages/Contact';
+import Footer from './Pages/Footer';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+export default function App() {
+  const [menuState , SetMenu] = useState(false);
+
+  function toggleMenu(){
+    SetMenu(!menuState ? 'active' : menuState === 'deactive' ? 'active' : 'deactive')
   }
+  return (
+    <React.Fragment>
+      <Nav toggleMenu={toggleMenu} showMenu={menuState}> 
+        <About />
+        <Projects />
+        <Contact />
+        <Footer />
+      </Nav>
+    </React.Fragment>
+  )
 }
 
-export default App;

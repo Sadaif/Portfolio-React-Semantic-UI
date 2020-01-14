@@ -1,56 +1,36 @@
 import React , {useState} from 'react';
 import { 
-  Container, 
-  Reveal,
+  Container,  
   Icon,  
   Menu,
   Responsive,
   Segment,
   Sidebar,
   Visibility,
-  Image
+  Modal,
+  Header,
+  Button,
+  Image 
 } from 'semantic-ui-react'
-
-// images imports
-import dafi from '../Project_Images/dafi.jpg'
-import desk from '../Project_Images/desk.jpg'
 import { ButtonComponent } from '../Components/Button';
-let devAvatar = 'https://cdn0.iconfinder.com/data/icons/bitcoin-cryptocurrency-lavender-vol-2-1/512/cypherpunk-512.png';
-
+import avatar from "../Images/Sadaif.jpg"
+// import cv from "../Images/my-cv.pdf"
+import { FooterListComponent } from '../Components/List'; 
 
 //getWidth function
 const getWidth = () => {
   const isSSR = typeof window === 'undefined'
   return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
-
-
-// HomePage heading functions
-const HomepageHeading = ({ mobile }) => (
-  <header>
-    <div>
-      <Image src={desk} fluid  /> 
-        <div style={{'marginTop': mobile ? '-11em' : '-50em' , marginLeft: '70%'}}>
-          <Reveal animated="move right">
-
-            <Reveal.Content visible>
-              <Image circular size={ mobile ? 'tiny' : 'small'}  verticalAlign='middle' src={devAvatar} />
-            </Reveal.Content>
-
-            <Reveal.Content hidden  > 
-                <Image circular size={ mobile ? 'tiny' : 'small'} src={dafi} />
-            </Reveal.Content>
-
-          </Reveal> 
-        </div> 
-    </div>
-  </header>
-)
  
 
 // this function handle desktop menu and header page
 const DesktopContainer = (props) => {
   const [fixed , setFixed] = useState()
+  const [open , setOpen] = useState(false)
+  let show =  () => setOpen( true)
+  let close = () => setOpen(false)
+
   function hideFixedMenu(){
     setFixed(!fixed)
   }
@@ -60,6 +40,54 @@ const DesktopContainer = (props) => {
 
   return (
     <React.Fragment >
+      <Modal dimmer="blurring" basic open={open} onClose={close}>
+          <Modal.Header>Hire Me</Modal.Header>
+          <Modal.Content image>
+            <Image
+              wrapped
+              size='medium'
+              src={avatar}
+            />
+            <Modal.Description>
+              <Header style={{color: 'white'}}>Grab My CV to find out more about me.</Header>
+              <p>
+                I figure out the process of designing,  
+                writing,testing,debugging/troubleshooting and  
+                maintaining the source code of computer programs.
+                Skilled in HTML5 ,CSS,React.js,Redux,React Native
+                and MySQL . Collaborating and working in a team
+                environment via github.
+              </p>
+              <FooterListComponent 
+                as='a' href="https://www.facebook.com/sadaif.rizvi" name='facebook' title='Facebook'
+              />
+              <FooterListComponent 
+                as='a' href="https://www.instagram.com/sadaif_rizvi/" name='instagram' title='Instagram'
+              />
+              <FooterListComponent 
+                as='a' href="https://github.com/Sadaif"  name='github' title='Github'
+              />
+              <FooterListComponent 
+                as='a' href="https://www.linkedin.com/in/sadaif-rizvi-a66621139/"  name='linkedin' title='Linkedin'
+              /> 
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button color='red' onClick={close}>
+              Cancel
+            </Button>
+            <a href="https://www.slideshare.net/SyedSadaifRizvi/cv-219734198" download>
+              <Button
+                positive
+                icon='checkmark'
+                labelPosition='right'
+                content="Download"
+                onClick={close}
+              />
+            </a>
+          </Modal.Actions>
+        </Modal>
+
       <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
           once={false}
@@ -79,23 +107,16 @@ const DesktopContainer = (props) => {
             size='large'
           >
             <Container>
-              <Menu.Item as='a' active href="/"> Home </Menu.Item>
-              <Menu.Item as='a' href="#about"> About </Menu.Item>
+              <Menu.Item as='a' active href="/"> Home </Menu.Item> 
               <Menu.Item as='a' href='#projects'> Portfolio </Menu.Item>
               <Menu.Item as='a' href='#contact'> Contact </Menu.Item>
 
-              {/* <Menu.Item position='right'>
-                <ButtonComponent title='Log in' as='a' inverted={!fixed} />
-                <ButtonComponent title='Sign Up' as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}/> 
-              </Menu.Item> */}
+              <Menu.Item position='right'> 
+                  <ButtonComponent onClick={() => show('blurring')} title='Hire Me' as='a'  style={{ marginLeft: '0.5em' }}/>   
+              </Menu.Item>
             </Container>
           </Menu> 
-        </Segment>
-
-          {/* Home page heading component ------- */}
-
-          <HomepageHeading />
-        
+        </Segment> 
         </Visibility>
 
         {props.children}
@@ -108,7 +129,7 @@ const DesktopContainer = (props) => {
 // this function handle mobile responsive design 
 const MobileContainer = (props) => {
   
-  const [fixed ] = useState() 
+  // const [fixed ] = useState() 
   const [sidebarOpened , setsidebarOpened ] = useState()
   function handleSidebarHide(){
     setsidebarOpened(!sidebarOpened)
@@ -131,19 +152,16 @@ const MobileContainer = (props) => {
       vertical
       visible={sidebarOpened}
     >
-      <Menu.Item as='a' active href="/"> Home </Menu.Item>
-      <Menu.Item as='a' href="#about"> About </Menu.Item>
+      <Menu.Item as='a' active href="/"> Home </Menu.Item> 
       <Menu.Item as='a' href='#projects'> Portfolio </Menu.Item>
-      <Menu.Item as='a' href='#contact'> Contact </Menu.Item>
-      {/* <Menu.Item as='a'>Log in</Menu.Item>
-      <Menu.Item as='a'>Sign Up</Menu.Item>  */}
+      <Menu.Item as='a' href='#contact'> Contact </Menu.Item> 
     </Sidebar>
 
     <Sidebar.Pusher dimmed={sidebarOpened}>
       <Segment
         inverted
         textAlign='center'
-        style={{ minHeight: 350, padding: '1em 0em' }}
+        
         vertical
       >
         <Container>
@@ -151,13 +169,13 @@ const MobileContainer = (props) => {
             <Menu.Item onClick={handleToggle}>
               <Icon name='sidebar' />
             </Menu.Item>
-            {/* <Menu.Item position='right'>
-              <ButtonComponent title='Log in' as='a' inverted={!fixed} />
-              <ButtonComponent title='Sign Up' as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}/> 
-            </Menu.Item> */}
+            <Menu.Item position='right'> 
+              <a href="https://www.slideshare.net/SyedSadaifRizvi/cv-219734198" download>
+              <ButtonComponent title='Hire Me' as='a'  style={{ marginLeft: '0.5em' }}/> 
+              </a>
+            </Menu.Item>
           </Menu>
-        </Container>
-        <HomepageHeading mobile />
+        </Container> 
       </Segment>
      
       {props.children}
